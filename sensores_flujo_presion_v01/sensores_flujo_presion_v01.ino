@@ -50,18 +50,20 @@ void setup() {
 }
 
 void loop() {
- 
+ //sensor de flujo
   Wire.requestFrom(0x40, 3); // read 3 bytes from device with address 0x40
   parte_alta = Wire.read(); // first received byte stored here. The variable "uint16_t" can hold 2 bytes, this will be relevant later
   parte_baja = Wire.read(); // second received byte stored here
   valor_flujo_sin_offset = ((parte_alta << 8) | parte_baja);
   valor_flujo = (valor_flujo_sin_offset - offset);
-  
+  //sensor de flujo
+
+  //sensor de presion
   presion = loadcell.get_units(1) - calibracion;
   outputValue = mapfloat(presion, 0, 0xFFFFFF, 0, 40) * 5;
   //outputValue = mapfloat(presion, 0, 0xFFFFFF, 0, 40) * 10.1972;
   
-  //Serial.println(outputValue);      //sensor de presión
+  //Serial.print(outputValue);      //sensor de presión
   //Serial.print(",");
   Serial.println(valor_flujo);    //sensor de flujo
   //Serial.print(String("[") + valor_flujo + String(",") + outputValue + String("]"));
